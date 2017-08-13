@@ -18,9 +18,45 @@
     <ClInclude Include="define.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="role.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="using.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="monster.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="misssion.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="battle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="control.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="define.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="control.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -64,9 +64,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="battle.h" />
+    <ClInclude Include="control.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="map.h" />
+    <ClInclude Include="misssion.h" />
+    <ClInclude Include="monster.h" />
+    <ClInclude Include="npc.h" />
+    <ClInclude Include="role.h" />
+    <ClInclude Include="skill.h" />
+    <ClInclude Include="using.h" />
+    <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="control.cpp" />
+    <ClCompile Include="define.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
