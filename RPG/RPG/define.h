@@ -9,8 +9,6 @@
 #include <math.h>
 using namespace std ;
 
-extern void print_line_sep();
-
 #include "battle.h"
 #include "map.h"
 #include "misssion.h"
@@ -30,6 +28,12 @@ class Using;
 class Weapon;
 class NPC;
 class Map;
+class MapList;
 class Control;
 
-
+inline void print_line_sep()
+{
+	for (int i = 0; i<55; ++i)
+		cout << '-';
+	cout << endl;
+}

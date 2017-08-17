@@ -53,10 +53,10 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="define.cpp">
+    <ClCompile Include="control.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="control.cpp">
+    <ClCompile Include="map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

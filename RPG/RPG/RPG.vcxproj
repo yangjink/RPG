@@ -78,8 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="control.cpp" />
-    <ClCompile Include="define.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
