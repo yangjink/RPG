@@ -110,6 +110,61 @@ Map* Map::GetEast()
 
 
 //以下为MapList
+int MapList::SetPointer()//设置地图关系
+{
+	list<Map>::iterator it_i;
+	list<Map>::iterator it_j;
+	int posxi;
+	int posyi;
+	int posxj;
+	int posyj;
+
+	for (it_i = _maplist.begin(); it_i != _maplist.end(); ++it_i)
+	{
+		for (it_j = _maplist.begin(); it_j != _maplist.end(); ++it_j)
+		{
+			if (it_i->GetID() == it_j->GetID())
+			{
+				continue;
+			}
+			posxi = it_i->GetPosX();
+			posxj = it_j->GetPosX();
+			posyi = it_i->GetPosY();
+			posyj = it_j->GetPosY();
+
+			//根据坐标位置，进行方位连接
+			// i  j
+			if ((posyi == posyj) && ((posxj - posxi) == 1))
+			{
+				it_i->SetEast(&(*it_j));
+				it_j->SetWest(&(*it_i));
+			}
+			// j  i
+			else if ((posyi == posyj) && ((posxi - posxj) == 1))
+			{
+				it_j->SetEast(&(*it_i));
+				it_i->SetWest(&(*it_j));
+			}
+			// i 
+			// j
+			else if ((posxi == posxj) && ((posyi - posyj) == 1))
+			{
+				it_i->SetSouth(&(*it_j));
+				it_j->SetNorth(&(*it_i));
+			}
+			// j
+			// i
+			else if ((posxi == posxj) && ((posyj - posyi) == 1))
+			{
+				it_i->SetNorth(&(*it_j));
+				it_j->SetSouth(&(*it_i));
+			}
+		}//it_j
+	}//it_i
+
+	return 0;
+}
+
 int MapList::SetCurMap()//设置开始位置的所在的地图
 {
 	_curMap = &(*_maplist.begin());

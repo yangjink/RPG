@@ -55,6 +55,7 @@ private:
 	Map* _curMap;//当前所在的位置
 	int _curMapID;
 public:
+	int SetPointer();//设置地图之间关系
 	int SetCurMap();
 	int PushMap(Map& map);
 	int ChangeMap(int pos);
