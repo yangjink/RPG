@@ -1,6 +1,6 @@
 #include "control.h"
 
-int Control::game_control(MapList& maplist)
+int Control::game_control(Role& role,MapList& maplist)
 {
 	int num_in_map = 0;
 	string userinput;
@@ -8,6 +8,7 @@ int Control::game_control(MapList& maplist)
 
 	while (1)
 	{
+		role.PrintHead();
 		maplist.PrintMap();
 		print_line_sep();
 		num_in_map;
@@ -71,10 +72,10 @@ int Control::game_control(MapList& maplist)
 	return 1;
 }
 
-int Control::game_init(MapList& maplist)
+int Control::game_init(Role& role,MapList& maplist)
 {
 	init_map(maplist);
-
+	init_role(role);
 	return 1;
 }
 
@@ -173,6 +174,11 @@ int Control::init_map(MapList& maplist)
 	return 1;
 }
 
+int Control::init_role(Role& role)
+{
+	role.Initialize();
+	return 1;
+}
 
 int Control::print_txt(char* filename)
 {
