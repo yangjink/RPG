@@ -20,6 +20,8 @@ using namespace std ;
 #include "skill.h"
 #include "control.h"
 
+#define SLEEPTIME 1000
+
 class Role;
 class Monster;
 class Mission;

@@ -12,7 +12,7 @@ private:
 	int _MP;
 	int _MPmax;
 	int _expMax;
-	int  _exp;
+	int _exp;
 	int _level;
 	int _attackPoint;
 	int _defendPoint;

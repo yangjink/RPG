@@ -3,18 +3,19 @@
 
 int main()
 {
+	Role role;
 	Control control;
 	MapList map_list;
 	int main_menu;
 
-	control.game_init(map_list);
+	control.game_init(role,map_list);
 	while (1)
 	{
 		main_menu = control.print_game();
 		switch (main_menu)
 		{
 		case GAME_NEW:
-			control.game_control(map_list);
+			control.game_control(role,map_list);
 			break;
 		case GAME_LOAD:
 			if (control.game_laod() == -1)

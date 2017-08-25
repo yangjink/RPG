@@ -62,3 +62,4 @@ public:
 	int PrintMap();//打印当前地图
 	int ShowMap();//展示整个地图
 };
+
