@@ -4,6 +4,8 @@
 #include <vector>
 #include <ctime>
 #include <list>
+#include <set>
+#include <map>
 #include <fstream>
 #include <windows.h>
 #include <math.h>
@@ -24,6 +26,7 @@ using namespace std ;
 
 class Role;
 class Monster;
+class MonsterMap;
 class Mission;
 class Skill;
 class Using;
