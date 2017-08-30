@@ -1,6 +1,9 @@
 #pragma once
 #include "define.h"
 //这个类将对地图进行描述
+class Master;
+class Role;
+
 enum {
 	MAP_EAST,
 	MAP_WEST,
@@ -15,6 +18,11 @@ private:
 	int _pos_x;
 	int _pos_y;
 	int _level;
+
+	//怪物列表
+	list<int> _monsterIDList;
+	list<int>::iterator _itr_monsterID;
+	list<int> _monsterIDBosslist;
 
 	Map* _east;
 	Map* _west;
@@ -33,6 +41,10 @@ public:
 	Map* SetNorth(Map*);
 	Map* SetSouth(Map*);
 
+	int AddMonster(int);
+	int AddMonsterBoss(int);
+
+	int Clear();
 	//提供属性
 	string GetName();
 	int GetID();
@@ -43,10 +55,23 @@ public:
 	Map* GetWest();
 	Map* GetNorth();
 	Map* GetSouth();
+
+	int GetMonsterID(const int&);
+	//怪物集合的操作
+	bool InitMonsterID();
+	int GetCurMonsterID();
+	bool NextMonsterID();
+	bool EndMonsterID();
+	bool InitItrMonsterIDBoss();
+	int GetCurMonsterIDBoss();
+	bool NextItrMonsterIDBoss();
+	bool EndMonsterIDBoss();
+
 };
 
 //整个地图的一个链表
-
+class Monster;
+class MonsterMap;
 class MapList
 {
 private:
@@ -54,11 +79,21 @@ private:
 	list<Map>::iterator _it_map;
 	Map* _curMap;//当前所在的位置
 	int _curMapID;
+
+	//怪物链表
+	list<Monster> _monster;
+	list<Monster>::iterator _itr_monster;
 public:
 	int SetPointer();//设置地图之间关系
 	int SetCurMap();
+	int MapClear();
 	int PushMap(Map& map);
 	int ChangeMap(int pos);
+	int GetMonsterNum();
+	Monster GetMonster(const int&);
+	bool DeleteMonster(const int&);
+	//生成NPC和怪物
+	int Generate(Role&,MonsterMap&);
 	int PrintMap();//打印当前地图
 	int ShowMap();//展示整个地图
 };

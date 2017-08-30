@@ -59,6 +59,11 @@ int Monster::SetDie(int die)
 	return _die;
 }
 
+//初始化掉落物品和装备
+int Monster::MonsterClear()
+{
+	return 0;
+}
 //设置掉落物品
 //设置掉落装备
 //得到属性
@@ -121,6 +126,7 @@ int Monster::ChangeHP(const int& chp)
 	}
 	return _HP;
 }
+
 //判断是否死亡
 bool Monster::Dead()
 {
@@ -134,9 +140,10 @@ bool Monster::Dead()
 		return 1;
 	}
 }
+
 //怪物的信息应该是跟人物级别有关的，
 //否则的话，游戏体验感会很差,这个函数会返回改变后的副本；
-Monster Monster::Generate(const int& level = 0)
+Monster Monster::Generate(const int& level)
 {
 	if (level - _level > 3)
 	{
@@ -149,12 +156,14 @@ Monster Monster::Generate(const int& level = 0)
 	_HP = _HPmax;
 	return (*this);
 }
+
 //打印怪物信息
 int Monster::NEW()
 {
 	_HP = _HPmax;
 	return _HP;
 }
+
 int Monster::PrintDead()
 {
 	cout << "   " << _name << "被你杀死了" << endl;
@@ -172,6 +181,7 @@ int MonsterMap::InitMonsterItr()
 	_itr_monster = _monsterMap.begin();
 	return 1;
 }
+
 int MonsterMap::NextMonsterItr()
 {
 	if (_itr_monster != _monsterMap.end())
@@ -181,6 +191,7 @@ int MonsterMap::NextMonsterItr()
 	}
 	return -1;
 }
+
 int MonsterMap::EndMonsterItr()
 {
 	if (_itr_monster == _monsterMap.end())
@@ -192,16 +203,19 @@ int MonsterMap::EndMonsterItr()
 		return -1;
 	}
 }
+
 //增加怪物，如果已经存在，就不在添加；
 bool MonsterMap::AddMonster(Monster& monster)
 {
-	return _monsterMap.insert(make_pair(monster.GetID, monster)).second;
+	return _monsterMap.insert(make_pair(monster.GetID(), monster)).second;
 }
+
 //对于当前怪物的复制
 Monster MonsterMap::GetCurMonster()
 {
 	return _itr_monster->second;
 }
+
 //当前怪物的引用
 Monster* MonsterMap::GerCurMonsterRef()
 {
@@ -220,6 +234,7 @@ Monster MonsterMap::GetMonster(const int& id)
 {
 	return _monsterMap.find(id)->second;
 }
+
 //设置怪物的锁
 int MonsterMap::SetLock(const int& id, const int& flag)
 {

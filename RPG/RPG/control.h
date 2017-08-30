@@ -2,6 +2,7 @@
 #include "define.h"
 class MapList;
 class Role;
+class MonsterMap;
 enum game_menu
 {
 	GAME_SAVE,
@@ -15,11 +16,11 @@ enum game_menu
 class Control
 {
 public:
-	int game_init(Role& role,MapList& maplist);
+	int game_init(Role& role,MapList& maplist,MonsterMap& monsterMap);
 	int game_save();
 	int game_laod();
 
-	int game_control(Role&,MapList&);
+	int game_control(Role&, MapList&,MonsterMap& monsterMap);
 	int print_game();
 	int game_info();
 	int game_my();
@@ -27,4 +28,5 @@ public:
 private:
 	int init_map(MapList&);
 	int init_role(Role&);
+	int init_monster(MonsterMap&);
 };

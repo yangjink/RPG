@@ -61,7 +61,35 @@ Map* Map::SetSouth(Map* south)
 	return _south;
 }
 
+int Map::AddMonster(int monsterID)
+{
+	for (_itr_monsterID = _monsterIDList.begin(); _itr_monsterID != _monsterIDList.end(); ++_itr_monsterID)
+	{
+		if (*_itr_monsterID == monsterID)
+		{
+			return 0;
+		}
+	}
+	_monsterIDList.push_back(monsterID);
+	return monsterID;
+}
+int Map::AddMonsterBoss(int monsterid)
+{
+	for (_itr_monsterID = _monsterIDBosslist.begin();
+		_itr_monsterID != _monsterIDBosslist.end();
+		++_itr_monsterID)
+	if ((*_itr_monsterID) == monsterid)
+		return 0;
+	_monsterIDBosslist.push_back(monsterid);
+	return monsterid;
+}
 
+int Map::Clear()
+{
+	_monsterIDList.clear();
+	_monsterIDBosslist.clear();
+	return 0;
+}
 //返回属性
 string Map::GetName()
 {
@@ -108,6 +136,70 @@ Map* Map::GetEast()
 	return _east;
 }
 
+int Map::GetMonsterID(const int& num)
+{
+	_itr_monsterID = _monsterIDList.begin();
+	for (int i = 1; i < num; ++i)
+		++_itr_monsterID;
+
+	return (*_itr_monsterID);
+}
+//怪物集合的操作
+bool Map::InitMonsterID()
+{
+	_itr_monsterID = _monsterIDList.begin();
+	return true;
+}
+int Map::GetCurMonsterID()
+{
+	return *_itr_monsterID;
+}
+bool Map::NextMonsterID()
+{
+	if (_itr_monsterID != _monsterIDList.end())
+		++_itr_monsterID;
+	return true;
+}
+bool Map::EndMonsterID()
+{
+	if (_itr_monsterID == _monsterIDList.end())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool Map::InitItrMonsterIDBoss()
+{
+	_itr_monsterID = _monsterIDBosslist.begin();
+	return true;
+}
+int Map::GetCurMonsterIDBoss()
+{
+	return *_itr_monsterID;
+}
+bool Map::NextItrMonsterIDBoss()
+{
+	if (_itr_monsterID != _monsterIDBosslist.end())
+	{
+		++_itr_monsterID;
+		return true;
+	}
+	return false;
+}
+bool Map::EndMonsterIDBoss()
+{
+	if (_itr_monsterID == _monsterIDBosslist.end())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 //以下为MapList
 int MapList::SetPointer()//设置地图关系
@@ -170,11 +262,102 @@ int MapList::SetCurMap()//设置开始位置的所在的地图
 	_curMap = &(*_maplist.begin());
 	return 1;
 }
-
+int MapList::MapClear()
+{
+	_monster.clear();
+	return 0;
+}
 int MapList::PushMap(Map& map)//添加一个新地图
 {
 	_maplist.push_back(map);
 	return 1;
+}
+//得到怪物的总数
+int MapList::GetMonsterNum()
+{
+	return _monster.size();
+
+}
+Monster MapList::GetMonster(const int& num)
+{
+	_itr_monster = _monster.begin();
+	for (int i = 1; i<num; ++i)
+		++_itr_monster;
+	return (*_itr_monster);
+}
+//战斗结束后将怪物从列表中删除
+bool MapList::DeleteMonster(const int& num)
+{
+	_itr_monster = _monster.begin();
+	for (int i = 1; i<num; ++i)
+		++_itr_monster;
+	_monster.erase(_itr_monster);
+	return true;
+}
+//生成NPC和怪物
+int MapList::Generate(Role& role, MonsterMap& monsterMap)
+{
+	//清空
+	_monster.clear();
+
+	//生成怪物列表要随人物级别改变而改变
+	_curMap->InitItrMonsterIDBoss();
+	while (!_curMap->EndMonsterIDBoss())
+	{
+		if (monsterMap.GetMonster(_curMap->GetCurMonsterIDBoss()).GetLock() == MON_UNLOCK)
+		{
+			_monster.push_back(monsterMap.GetMonster(_curMap->GetCurMonsterIDBoss()).Generate());
+		}
+		_curMap->NextItrMonsterIDBoss();
+	}
+	//然后生成怪物列表，怪物总数不应该大过9，当有怪物被杀，就从中删除
+	//剩下还能有的怪物数字
+	int most_mon = 9 - _monster.size();
+	int num_monster = 0;//实际怪物数量
+
+	if (most_mon > 6)
+	{
+		num_monster = 6 - rand() % 3;//4~6
+	}
+	else
+	{
+		num_monster = most_mon - rand() % 3;
+		if (num_monster < 0)
+		{
+			num_monster = 0;
+		}
+	}
+
+	//然后生成怪物
+	//怪物的属性要随级别变化
+	int all_monster = 0;
+	int rand_monster[10];
+	for (int i = 0; i < sizeof(rand_monster) / sizeof(rand_monster[0]); ++i)
+	{
+		rand_monster[i] = -1;
+	}
+	for (_curMap->InitMonsterID();!_curMap->EndMonsterID();_curMap->NextMonsterID())
+	{
+		++all_monster;
+	}
+	if (all_monster != 0)
+	{
+		for (int i = 0; i < num_monster; ++i)
+		{
+			int tmp = rand() % all_monster;
+			_curMap->InitMonsterID();
+			for (int j = 0; j < tmp; j++)
+			{
+				_curMap->NextMonsterID();
+			}
+			if (monsterMap.GetMonster(_curMap->GetCurMonsterID()).GetLock() == MON_UNLOCK)
+			{
+				_monster.push_back(monsterMap.GetMonster(_curMap->GetCurMonsterID()).Generate(role.GetLevel()));
+			}
+		}
+	}
+
+	return 0;
 }
 
 int MapList::ChangeMap(int pos)//走下一图
@@ -218,7 +401,12 @@ int MapList::PrintMap()
 {
 	cout << "[" << _curMap->GetName() << "]你遇到了：" << endl;
 	//打印怪物或人
-
+	int index = 1;
+	for (_itr_monster = _monster.begin(); _itr_monster != _monster.end();++_itr_monster)
+	{
+		cout << "   " << index++ << " :";
+		cout << _itr_monster->GetName() << endl;
+	}
 	if (_curMap->GetNorth() != NULL)
 	{
 		cout << "[w北]--[" << _curMap->GetNorth()->GetName() << "]" << endl;

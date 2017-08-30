@@ -12,11 +12,11 @@
 using namespace std ;
 
 #include "battle.h"
-#include "map.h"
 #include "misssion.h"
-#include "monster.h"
-#include "npc.h"
 #include "role.h"
+#include "monster.h"
+#include "map.h"
+#include "npc.h"
 #include "using.h"
 #include "weapon.h"
 #include "skill.h"

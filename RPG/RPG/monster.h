@@ -40,6 +40,8 @@ public:
 	int SetLock(int tag);
 	int SetLevel(int level);
 	int SetDie(int die);
+	//初始化掉落物品
+	int MonsterClear();
 	//设置掉落物品
 	//设置掉落装备
 	//得到属性
@@ -66,20 +68,21 @@ public:
 	int NEW();
 	int PrintDead();
 };
-//对于map中怪物的比较实用id来进行比较
-class com{
-public:
-	bool operator()(Monster& m1, Monster& m2) const
-	{
-		return m1.GetID() > m2.GetID();
-	}
-};
+//修改之后改用map
+//对于set中怪物的比较实用id来进行比较
+//class com{
+//public:
+//	bool operator()(Monster& m1, Monster& m2) const
+//	{
+//		return m1.GetID() > m2.GetID();
+//	}
+//};
 //怪物map
 class MonsterMap
 {
 private:
 	//怪物链表
-	map<int,Monster,com> _monsterMap;
+	map<int,Monster> _monsterMap;
 	map<int,Monster>::iterator _itr_monster;
 public:
 	//对怪物链表的迭代器初始化

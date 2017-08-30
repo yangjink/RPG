@@ -1,25 +1,14 @@
-﻿生成启动时间为 2017/8/29 17:30:01。
+﻿生成启动时间为 2017/8/30 13:05:21。
      1>项目“D:\作业\RPG游戏\RPG（名字暂定）\RPG\RPG\RPG.vcxproj”在节点 2 上(Build 个目标)。
-     1>ClCompile:
-         D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt control.cpp main.cpp map.cpp monster.cpp role.cpp
-         monster.cpp
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\monster.cpp(140): error C2572: “Monster::Generate”: 重定义默认参数 : 参数 1
-                 d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\monster.h(64) : 参见“Monster::Generate”的声明
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\monster.cpp(211): error C2440: “return”: 无法从“const Monster”转换为“Monster *”
-                 没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\monster.cpp(220): error C2761: “Monster MonsterSet::GetMonster(const int &)”: 不允许成员函数重新声明
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\monster.cpp(222): error C2761: “int MonsterSet::SetLock(const int &,const int &)”: 不允许成员函数重新声明
-         正在生成代码...
-         正在编译...
-         control.cpp
-         正在生成代码...
-         正在编译...
-         role.cpp
-         map.cpp
-         main.cpp
-         正在生成代码...
-     1>已完成生成项目“D:\作业\RPG游戏\RPG（名字暂定）\RPG\RPG\RPG.vcxproj”(Build 个目标)的操作 - 失败。
+     1>Link:
+         D:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.lib" /MACHINE:X86 Debug\control.obj
+         Debug\main.obj
+         Debug\map.obj
+         Debug\monster.obj
+         Debug\role.obj
+         RPG.vcxproj -> D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.exe
+     1>已完成生成项目“D:\作业\RPG游戏\RPG（名字暂定）\RPG\RPG\RPG.vcxproj”(Build 个目标)的操作。
 
-生成失败。
+生成成功。
 
-已用时间 00:00:07.23
+已用时间 00:00:02.30
