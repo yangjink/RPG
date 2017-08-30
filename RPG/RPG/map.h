@@ -4,7 +4,7 @@
 class Master;
 class Role;
 
-enum {
+enum direction{
 	MAP_EAST,
 	MAP_WEST,
 	MAP_NORTH,

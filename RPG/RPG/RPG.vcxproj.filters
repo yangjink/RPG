@@ -65,5 +65,11 @@
     <ClCompile Include="monster.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="using.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
