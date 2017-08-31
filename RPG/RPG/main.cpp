@@ -7,16 +7,18 @@ int main()
 	Control control;
 	MapList map_list;
 	MonsterMap monster_map;
+	UsingMap using_map;
+
 	int main_menu;
 	srand(unsigned(time(NULL)));
-	control.game_init(role,map_list,monster_map);
+	control.game_init(role,map_list,monster_map,using_map);
 	while (1)
 	{
 		main_menu = control.print_game();
 		switch (main_menu)
 		{
 		case GAME_NEW:
-			control.game_control(role,map_list,monster_map);
+			control.game_control(role,map_list,monster_map,using_map);
 			break;
 		case GAME_LOAD:
 			if (control.game_laod() == -1)

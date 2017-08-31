@@ -1,6 +1,6 @@
 #include "control.h"
 
-int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap)
+int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,UsingMap& usingmap)
 {
 	int num_in_map = 0;
 	string userinput;
@@ -80,12 +80,63 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap)
 	return 1;
 }
 
-int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap)
+int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap,UsingMap& usingMap)
 {
 	init_map(maplist);
 	init_role(role);
 	init_monster(monsterMap);
+	init_using(usingMap);
+
 	return 1;
+}
+
+int init_using(UsingMap& usingmap)
+{
+	struct StUsing{
+		string name;
+		int ID;
+		int money;
+		int number;
+		int addHP;
+		int addMP;
+		int percent;
+	};
+	static StUsing st_using[] = {
+		/* name  id   money  num  +HP   +MP   per_or_n   */
+		{ "Ö¹Ñª²İ", 1, 15,    0,   10,   0, 0 },
+		{ "Ò©Æ¿", 2,   50,    0,   25,   0, 1 },
+		{ "²¹ÑªÒ©", 3, 40,    0,   25,   0, 0 },
+		{ "Ğ¡²¹ÆøÆ¿",4,10,    0,    0,  15, 0 },
+		{ "²¹ÆøÆ¿", 5, 40,    0,    0,  40, 0 },
+		{ "»ØÄ§Ò©", 6, 80,    0,    0,  40, 1 },
+		{ "ÀÇÆ¤", 7,   80,    0,    0,  0, 0 },
+		{ "¿óÊ¯", 9,   50,    0,    0,  0, 0 },
+		{ "Ìú·Û", 8,   23,    0,    0,  0, 0 },
+		{ "Ë®¾§", 15, 150,    0,    0,  0, 0 },
+		{ "»¢ÑÀ", 17,  90,    0,    0,  0, 0 },
+		{ "Ìú¿ó", 12,   0,    0,    0,  0, 0 },
+		{ "ÊŞÆ¤", 11, 100,    0,    0,  0, 0 },
+		{ "¹Ö½Å", 14, 160,    0,    0,  0, 0 },
+		{ "½äÖ¸", 21, 200,    0,    0,  0, 0 },
+		{ "½ğÊô", 16, 220,    0,    0,  0, 0 },
+		{ "Ä¾Ì¿", 23, 190,    0,    0,  0, 0 },
+		{ "¶ñÄ§µÄËéÆ¬", 24, 400,0,  0,  0, 0 },
+		{ "ÌìÊ¹Ö®Òí", 25, 360, 0,   0,  0, 0 }
+	};
+	Using tmp;
+	int num = sizeof(st_using) / sizeof(st_using[0]);
+	for (int i = 0; i < num; ++i)
+	{
+		tmp.SetName(st_using[i].name);
+		tmp.SetMoney(st_using[i].money);
+		tmp.SetID(st_using[i].ID);
+		tmp.SetAddHP(st_using[i].addHP);
+		tmp.SetAddMP(st_using[i].addMP);
+		tmp.SetPercentOrNo(st_using[i].percent);
+		tmp.SetNumber(st_using[i].number);
+		usingmap.PushUsing(tmp);
+	}
+	return true;
 }
 
 int Control::init_monster(MonsterMap& monsterMap)

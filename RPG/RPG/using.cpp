@@ -119,6 +119,47 @@ int Using::DecreaseNumber(int& num, int tag)
 	}
 	return _number;
 }
+//打印物品信息
+bool Using::PringUsingInfo()
+{
+	cout << _name;
+	if (_addHP != 0 || _addMP != 0)
+	{
+		cout << "(";
+		if (_addHP != 0)
+		{
+			cout << "HP:";
+			if (_percentOrNo == PERCENT)
+			{
+				cout << _addHP << "%";
+			}
+			else
+			{
+				cout << _addHP << " ";
+			}
+		}
+		if (_addMP != 0)
+		{
+			cout << "MP:";
+			if (_percentOrNo == PERCENT)
+			{
+				cout << _addMP << "%";
+			}
+			else
+			{
+				cout << _addMP << " ";
+			}
+		}
+		cout << ")";
+	}
+	else
+	{
+		cout << "(物品)";
+	}
+	cout << "*" << _number << endl;
+	return true;
+}
+
 //是否是使用的物品
 bool Using::UseUp()
 {
@@ -130,4 +171,51 @@ bool Using::UseUp()
 	{
 		return false;
 	}
+}
+
+//通过id找到对应的物品信息
+Using UsingMap::GetUsing(const int& id)
+{
+	return _usingMap.find(id)->second;
+}
+//往map中插入一条新的信息
+bool UsingMap::PushUsing(Using& use)
+{
+	return _usingMap.insert(make_pair(use.GetID(), use)).second;
+}
+
+//总共的数量
+int UsingMap::GetSize()
+{
+	return _usingMap.size();
+}
+
+//初始化
+bool UsingMap::InitItr()
+{
+	_itr_using = _usingMap.begin();
+	return true;
+}
+//next
+bool UsingMap::Next()
+{
+	if (_itr_using != _usingMap.end())
+	{
+		return false;
+	}
+	return true;
+}
+//end
+bool UsingMap::End()
+{
+	if (_itr_using != _usingMap.end())
+	{
+		return false;
+	}
+	return true;
+}
+//当前物品的信息
+Using UsingMap::GetCurUsing()
+{
+	return (_itr_using->second);
 }

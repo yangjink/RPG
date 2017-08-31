@@ -1,6 +1,10 @@
 #pragma once
 #include "define.h"
 //代表了使用物品及任务材料
+enum percent{
+	NOPERCENT = 0,
+	PERCENT = 1
+};
 class Using
 {
 private:
@@ -35,6 +39,31 @@ public:
 	int AddNumber(int&, int);
 	int DecreaseNumber(int);
 	int DecreaseNumber(int&, int);
+	//物品信息
+	bool PringUsingInfo();
+	
 	//是否还可以使用
 	bool UseUp();
+};
+//全局仅一份
+class UsingMap
+{
+private:
+	map<int,Using> _usingMap;
+	map<int, Using>::iterator _itr_using;
+public:
+	//通过id找到对应的物品信息
+	Using GetUsing(const int&);
+	//往map中插入一个新物品
+	bool PushUsing(Using&);
+	//总共的数量
+	int GetSize();
+	//初始化
+	bool InitItr();
+	//next
+	bool Next();
+	//end
+	bool End();
+	//当前物品的信息
+	Using GetCurUsing();
 };
