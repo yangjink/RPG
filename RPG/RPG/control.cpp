@@ -1,6 +1,6 @@
 #include "control.h"
 
-int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,UsingMap& usingmap)
+int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,UsingMap& usingmap,NPCMap& npcMap)
 {
 	int num_in_map = 0;
 	string userinput;
@@ -9,9 +9,9 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 	while (1)
 	{
 		role.PrintHead();
-		maplist.PrintMap();
+		maplist.PrintMap(npcMap,monstermap);
 		print_line_sep();
-		num_in_map = maplist.GetMonsterNum();//+npc数;
+		num_in_map = maplist.GetMonsterNum()+maplist.GetNPCNum();
 		cout << "1~" << num_in_map << "选择   0: 菜单" << endl;
 		print_line_sep();
 
@@ -38,10 +38,19 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 		else if (userinput[0] - '0' >= 1 && userinput[0] - '0' <= num_in_map)
 		{
 			//怪物或者NPC
-			int tmp_index = userinput[0] - '0';// - npc;
-			Monster mon = maplist.GetMonster(tmp_index);
-			mon.Generate(role.GetLevel());
-			//战斗
+			if (userinput[0] - '0' <= maplist.GetNPCNum())
+			{
+				//对话 任务
+			}
+			else
+			{
+				int tmp_index = userinput[0] - '0';// - npc;
+				Monster mon = maplist.GetMonster(tmp_index);
+				mon.Generate(role.GetLevel());
+
+				//战斗
+			}
+
 		}
 		else if (userinput[0] == 'w' || userinput[0] == 'W')
 		{
@@ -80,17 +89,77 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 	return 1;
 }
 
-int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap,UsingMap& usingMap)
+int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap,UsingMap& usingMap,NPCMap& npcMap)
 {
 	init_map(maplist);
 	init_role(role);
 	init_monster(monsterMap);
 	init_using(usingMap);
-
+	init_npc(npcMap);
 	return 1;
 }
 
-int init_using(UsingMap& usingmap)
+bool Control::init_npc(NPCMap& npcMap)
+{
+	struct StNpc{
+		string name;
+		string talk;
+		int ID;
+		int sell;
+		//一个npc有5个任务
+		int arr_mission[5];
+	};
+	StNpc st_npc[] = {
+		{ "沈万山", "哎，村子里的村民受妖怪折磨太久了.....",
+		300, 0, { 401, -1, -1, -1, -1 } },
+		{ "赵大娘", "看看有什么需要的，这里卖的很便宜啊。",
+		301, 1, { -1, -1, -1, -1, -1 } },
+		{ "欧阳铁匠", "我这可以打造天下最好的武器。",
+		302, 2, { -1, -1, -1, -1, -1 } },
+		{ "孟三", "哥哥去后山很久了，不知到发现了什么还不回来...",
+		303, 0, { 400, 402, 405, -1, -1 } },
+		{ "秦女", "我相公去山穴采药，不慎被山妖抓住，至今了无音讯，我该如何是好啊...5555555",
+		304, 0, { -1, -1, -1, -1, -1 } },
+		{ "娄知县", "只有彻底消灭了魔怪，天下方能安生啊....",
+		305, 0, { 404, -1, -1, -1, -1 } },
+		{ "程伯伯", "老了...身体都快动不了了...哎......",
+		306, 0, { 403, -1, -1, -1, -1 } },
+		{ "张先生", "啊！后山的确有很多不知到的秘密呢！",
+		307, 0, { 402, 405, -1, -1, -1 } },
+		{ "太白仙人", "呵呵，世人的污浊真是可笑啊，哈哈哈....",
+		308, 0, { 410, -1, -1, -1, -1 } },
+		{ "王捕头", "我是洛阳的捕头总管，这里的治安都是我负责。",
+		309, 0, { 404, 411, -1, -1, -1 } },
+		{ "景阳", "稀奇古怪的东西总是能令人兴奋。",
+		310, 0, { 406, 407, -1, -1, -1 } },
+		{ "宋书生", "苦读十几年，总该要有个结果吧.....",
+		311, 0, { 410, -1, -1, -1, -1 } },
+		{ "梦", "人妖之争何时了.....为什么总要有战争.....",
+		312, 0, { 408, -1, -1, -1, -1 } },
+		{ "总督", "现在的年轻人可真不得了，应该刮目先看了。",
+		313, 0, { 409, -1, -1, -1, -1 } },
+		{ "路人", "啊，我是出来打酱油的........",
+		314, 0, { -1, -1, -1, -1, -1 } }
+	};
+	NPC npc;
+	int num_npc = sizeof(st_npc) / (sizeof(st_npc[0]));
+	for (int i = 0; i < num_npc; ++i)
+	{
+		npc.NpcClear();
+		npc.SetName(st_npc[i].name);
+		npc.SetTalk(st_npc[i].talk);
+		npc.SetID(st_npc[i].ID);
+		npc.SetSell(st_npc[i].sell);
+		for (int j = 0; j < 5; ++j)
+		if (st_npc[i].arr_mission[j] >= 0)
+			npc.AddMission(st_npc[i].arr_mission[j]);
+		else
+			break;
+		npcMap.PushNPC(npc);
+	}
+	return 0;
+}
+int Control::init_using(UsingMap& usingmap)
 {
 	struct StUsing{
 		string name;
@@ -282,11 +351,23 @@ int Control::init_map(MapList& maplist)
 	Map map;
 	for (int i = 0; i < num_map;++i)
 	{
+		map.Clear();
 		map.SetName(st_map[i].name);
 		map.SetID(st_map[i].ID);
 		map.SetPosX(st_map[i].x);
 		map.SetPosY(st_map[i].y);
 		map.SetLevel(st_map[i].level);
+		for (int j = 0; j < 10; j++)
+		{
+			if (st_map[i].arr_npc[j] >= 0)
+			{
+				map.AddNPC(st_map[i].arr_npc[j]);
+			}
+			else
+			{
+				break;
+			}
+		}
 		for (int j = 0; j < 10; j++)
 		{
 			if (st_map[i].arr_monster[j] >= 0)

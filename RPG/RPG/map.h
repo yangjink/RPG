@@ -3,6 +3,7 @@
 //这个类将对地图进行描述
 class Master;
 class Role;
+class NPCmap;
 
 enum direction{
 	MAP_EAST,
@@ -19,6 +20,9 @@ private:
 	int _pos_y;
 	int _level;
 
+	//npc列表
+	list<int> _NPCIDList;
+	list<int>::iterator _itr_npcid;
 	//怪物列表
 	list<int> _monsterIDList;
 	list<int>::iterator _itr_monsterID;
@@ -41,6 +45,7 @@ public:
 	Map* SetNorth(Map*);
 	Map* SetSouth(Map*);
 
+	int AddNPC(int);
 	int AddMonster(int);
 	int AddMonsterBoss(int);
 
@@ -56,6 +61,11 @@ public:
 	Map* GetNorth();
 	Map* GetSouth();
 
+	//npc集合
+	bool InitItrNPCID();
+	int GetCurNPCID();
+	bool NextItrNPC();
+	bool EndNPCID();
 	int GetMonsterID(const int&);
 	//怪物集合的操作
 	bool InitMonsterID();
@@ -72,6 +82,7 @@ public:
 //整个地图的一个链表
 class Monster;
 class MonsterMap;
+class NPCMap;
 class MapList
 {
 private:
@@ -79,7 +90,9 @@ private:
 	list<Map>::iterator _it_map;
 	Map* _curMap;//当前所在的位置
 	int _curMapID;
-
+	//npc
+	vector<int> _npc;
+	vector<int>::iterator _itr_npc;
 	//怪物链表
 	list<Monster> _monster;
 	list<Monster>::iterator _itr_monster;
@@ -89,12 +102,15 @@ public:
 	int MapClear();
 	int PushMap(Map& map);
 	int ChangeMap(int pos);
+
+	int GetNPCNum();
+	int GetNPCID(const int&);
 	int GetMonsterNum();
 	Monster GetMonster(const int&);
 	bool DeleteMonster(const int&);
 	//生成NPC和怪物
 	int Generate(Role&,MonsterMap&);
-	int PrintMap();//打印当前地图
+	int PrintMap(NPCMap&,MonsterMap&);//打印当前地图
 	int ShowMap();//展示整个地图
 };
 

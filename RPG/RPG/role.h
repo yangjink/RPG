@@ -2,6 +2,8 @@
 #include "define.h"
 //人物模型
 //
+class Using;
+class Weapon;
 class Role
 {
 private:
@@ -21,6 +23,8 @@ private:
 	int posY;
 
 	//角色的背包
+	list<Using> _usingList;
+	list<Using>::iterator _itr_using;
 	//身上的装备
 	//技能
 public:
@@ -36,6 +40,19 @@ public:
 	int SetLevel(int);
 	int SetAttackPoint(int);
 	int SetDefendPoint(int);
+
+	//设置背包
+	bool InitUsingItr();
+	bool NextUsingItr();
+	bool EndUsingItr();
+	Using GetCurUsing();
+	//放入东西
+	int PickUp(Using&);
+	int PickUp(Using&, int);
+	int PickUp(Weapon);
+
+	//出售东西
+	int Sell();
 	//得到基本信息
 	string GetName();
 	int GetMoney();

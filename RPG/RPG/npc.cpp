@@ -8,7 +8,7 @@ bool NPC::NpcClear()
 	//任务的清理
 	return true;
 }
-//增加任务
+//增加任务（未完成）
 bool NPC::AddMission(int)
 {
 	return true;
@@ -191,34 +191,123 @@ int NPC::SellUsing(Role& role, UsingMap& usingMap)
 				usingMap.Next();
 			}
 			role.PrintHead();
-			if ()
+			if (usingMap.GetCurUsing().PrintInfo(1) != -1)
+			{
+				continue;
+			}
+			int num_using = 0;
+			while (1)
+			{
+				cout << "请输入要购买的数量(1~999):" << endl;
+				cin >> userinput;
+				int num_size = 3;
+				if (int(userinput.length())<3)
+					num_size = int(userinput.length());
+				if (userinput[0]<'0' || userinput[0]>'9')
+					continue;
+				for (int i = 0; i<num_size; ++i)
+				{
+					if (userinput[i]<'0' || userinput[i]>'9')
+						break;
+					num_using = 10 * num_using + (userinput[i] - '0');
+				}
+				break;
+			}
+			//判断钱数够不够
+			if (usingMap.GetCurUsing().GetMoney() * 2 * num_using > role.GetMoney())
+			{
+				cout << "金钱不足!!!" << endl;
+				Sleep(SLEEPTIME);
+				continue;
+			}
+			role.ChangeMoney(-(usingMap.GetCurUsing().GetMoney() * 2 * num_using));
+			role.PickUp(usingMap.GetCurUsing(),num_using);
 		}
 
 
 	}
 }
 //商店出售的都是白装，但是属性会有随机变化，且价格是两倍
-int NPC::SellWeapon(Role&);
+int NPC::SellWeapon(Role&)
+{
+	return 0;
+}
 //当角色出售物品时
-int NPC::RoleSell(Role&);
+int NPC::RoleSell(Role& role)
+{
+	role.Sell();
+	return 1;
+}
 //当npc不是商人时，npc的对话，并且任务也是从次函数中接受
-int NPC::Speak();
+int NPC::Speak()
+{
+	return 0;
+}
 //打印npc信息
-int NPC::PrintNpcInfo();
+int NPC::PrintNpcInfo()
+{
+	cout << "[NPC]" << _name;
+	switch (_sell)
+	{
+	case SELLUSING:
+		cout << "----药店" << endl;
+		break;
+	case SELLWEAPON:
+		cout << "----武器店" << endl;
+		break;
+	case SELLNOTHING:
+		cout << endl;
+		break;
+	default:
+		break;
+	}
+	return 1;
+}
 
 //NPCMap
 //NPC数目
-int NPCMap::GetNPCNum();
+int NPCMap::GetNPCNum()
+{
+	return _npcMap.size();
+}
 //NPC的拷贝
-NPC NPCMap::GetNPC(int id);
+NPC NPCMap::GetNPC(int id)
+{
+	return _npcMap.find(id)->second;
+}
 //NPC的指针
-NPC* NPCMap::GetNPCPtr(int id);
+NPC* NPCMap::GetNPCPtr(int id)
+{
+	return &(_npcMap.find(id)->second);
+}
 //添加一个NPC
-int NPCMap::PushNPC(NPC);
+bool NPCMap::PushNPC(NPC npc)
+{
+	return _npcMap.insert(make_pair(npc.GetID(), npc)).second;
+}
 
 //_itr_npc
-bool NPCMap::InitItr();
-bool NPCMap::Next();
-bool NPCMap::End();
+bool NPCMap::InitItr()
+{
+	_itr_npc = _npcMap.begin();
+	return true;
+}
 
-NPC* NPCMap::GetCurNPC();
+bool NPCMap::Next()
+{
+	if (_itr_npc != _npcMap.end())
+	{
+		++_itr_npc;
+		return true;
+	}
+	return false;
+}
+bool NPCMap::End()
+{
+	return _itr_npc == _npcMap.end();
+}
+
+NPC* NPCMap::GetCurNPC()
+{
+	return &_itr_npc->second;
+}

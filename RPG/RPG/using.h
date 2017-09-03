@@ -40,6 +40,9 @@ public:
 	int DecreaseNumber(int);
 	int DecreaseNumber(int&, int);
 	//物品信息
+	/*同时 return 1 决定使用  -1 丢弃  0 什么也不干*/
+	int PrintInfo(int in_npc = 0);
+	//使用物品的信息
 	bool PringUsingInfo();
 	
 	//是否还可以使用

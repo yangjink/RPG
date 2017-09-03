@@ -160,6 +160,86 @@ bool Using::PringUsingInfo()
 	return true;
 }
 
+//物品信息
+/*同时 return 1 决定使用  -1 丢弃  0 什么也不干*/
+int Using::PrintInfo(int in_npc)
+{
+	string userinput;
+	cout << "-------------------物品信息------------------" << endl;
+	cout << "名称: " << _name << endl;
+	cout << "数量: " << _number << endl;
+	cout << "价格: " << _money << endl;
+	cout << "信息: ";
+	//不是任务物品
+	if (_addHP != 0 || _addMP != 0)
+	{
+		cout << "回复";
+		if (_addHP != 0)
+		{
+			cout << "生命：";
+			if (_percentOrNo == PERCENT)
+			{
+				cout << _addHP << "%";
+			}
+			else
+			{
+				cout << _addHP;
+			}
+		}
+		if (_addMP != 0)
+		{
+			cout << "生命：";
+			if (_percentOrNo == PERCENT)
+			{
+				cout << _addMP << "%";
+			}
+			else
+			{
+				cout << _addMP;
+			}
+		}
+	}
+	else
+	{
+		cout << "平常物品";
+	}
+	cout << endl;
+	print_line_sep();
+	if (in_npc == 1)//买
+	{
+		cout << "1:购买 ";
+	}
+	else if (in_npc == 2)//卖
+	{
+		cout << "1:卖出";
+	}
+	else
+	{
+		cout << "1:丢弃";
+		if (_addHP != 0 || _addMP != 0)
+		{
+			cout << "2:使用";
+		}
+	}
+	cout << "0:返回"<<endl;
+	print_line_sep();
+	while (1)
+	{
+		cin >> userinput;
+		if (userinput[0] == '0')
+		{
+			return 0;
+		}
+		if (userinput[0] == '2' && (_addHP != 0 || _addMP != 0))
+		{
+			return 1;
+		}
+		if (userinput[0] == '1')
+		{
+			return -1;
+		}
+	}
+}
 //是否是使用的物品
 bool Using::UseUp()
 {

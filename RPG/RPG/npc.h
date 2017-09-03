@@ -2,6 +2,10 @@
 #include "define.h"
 
 //NPC种类
+class UsingMap;
+class Role;
+class MapList;
+
 enum kind{
 	SELLNOTHING,//一般npc
 	SELLUSING,//商人
@@ -49,7 +53,7 @@ public:
 class NPCMap
 {
 private:
-	map<int,NPC> _npcList;
+	map<int,NPC> _npcMap;
 	map<int,NPC>::iterator _itr_npc;
 public:
 	//NPC数目
@@ -59,7 +63,7 @@ public:
 	//NPC的指针
 	NPC* GetNPCPtr(int id);
 	//添加一个NPC
-	int PushNPC(NPC);
+	bool PushNPC(NPC);
 
 	//_itr_npc
 	bool InitItr();

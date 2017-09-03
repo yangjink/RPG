@@ -58,6 +58,68 @@ int Role::SetDefendPoint(int defend)
 	return _defendPoint;
 }
 
+//设置背包
+bool Role::InitUsingItr()
+{
+	_itr_using = _usingList.begin();
+	return true;
+}
+bool Role::NextUsingItr()
+{
+	if (_itr_using != _usingList.end())
+	{
+		++_itr_using;
+		return true;
+	}
+	return false;
+}
+bool Role::EndUsingItr()
+{
+	return _itr_using == _usingList.end();
+}
+Using Role::GetCurUsing()
+{
+	return *_itr_using;
+}
+
+//放入东西
+int Role::PickUp(Using& use)
+{
+	int usingid = use.GetID();
+	for (_itr_using = _usingList.begin(); _itr_using != _usingList.end(); ++_itr_using)
+	if (_itr_using->GetID() == usingid)/* have*/
+	{
+		_itr_using->AddNumber(1);
+		return 1;
+	}
+	_usingList.push_back(use);
+	_usingList.back().AddNumber(1);
+	return 1;
+}
+int Role::PickUp(Using& use, int num)
+{
+	int usingid = use.GetID();
+	for (_itr_using = _usingList.begin(); _itr_using != _usingList.end(); ++_itr_using)
+	if (_itr_using->GetID() == usingid)/* have*/
+	{
+		_itr_using->AddNumber(num,1);
+		return 1;
+	}
+	_usingList.push_back(use);
+	_usingList.back().AddNumber(num,1);
+	return 1;
+}
+int Role::PickUp(Weapon)
+{
+	return 1;
+}
+
+
+//出售东西(尚未完善)
+int Role::Sell()
+{
+	return 1;
+}
 //返回基本信息
 string Role::GetName()
 {
