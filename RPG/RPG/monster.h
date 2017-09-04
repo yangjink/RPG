@@ -26,6 +26,9 @@ private:
 	//怪物状态，0：死亡；1：活着；
 	int _die;
 	//怪物掉落的使用物品
+	list<int> _uslist;
+	list<int> _wealist;
+	list<int>::iterator _itr_drop;
 	//怪物掉落的装备
 public:
 	//设置属性
@@ -41,9 +44,23 @@ public:
 	int SetLevel(int level);
 	int SetDie(int die);
 	//初始化掉落物品
+	int AddUsingList(int);
+	int AddWeaponList(int);
 	int MonsterClear();
 	//设置掉落物品
 	//设置掉落装备
+
+	int InitUsingItr();
+	int NextUsingItr();
+	int EndUsingItr();
+	int GetCurUsingID();
+	int InitWeaponItr();
+	int NextWeaponItr();
+	int EndWeaponItr();
+	int GetCurWeaponID();
+	//数量
+	int GetUsingNum();
+	int GetWeaponNum();
 	//得到属性
 	int GetDie();
 	string GetName();

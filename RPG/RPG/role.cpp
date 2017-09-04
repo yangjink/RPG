@@ -336,9 +336,9 @@ int Role::NewLife()
 }
 
 //打印背包,同时也牵扯使用
-int PrintBeg(int battleOrNot = 0)
+int Role::PrintBeg(int battleOrNot)
 {
-	int battle;
+	//int battle;
 	return 1;
 }
 

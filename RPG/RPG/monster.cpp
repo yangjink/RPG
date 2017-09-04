@@ -60,12 +60,108 @@ int Monster::SetDie(int die)
 }
 
 //初始化掉落物品和装备
+int Monster::AddUsingList(int id)
+{
+	list<int>::iterator itr;
+	for (itr = _uslist.begin(); itr != _uslist.end(); ++itr)
+	{
+		if (id == *itr)
+		{
+			return 0;
+		}
+	}
+	_uslist.push_back(id);
+	return 1;
+}
+int Monster::AddWeaponList(int id)
+{
+	return 1;
+}
 int Monster::MonsterClear()
 {
-	return 0;
+	_uslist.clear();
+	_wealist.clear();
+	return 1;
 }
 //设置掉落物品
 //设置掉落装备
+
+int Monster::InitUsingItr()
+{
+	_itr_drop = _uslist.begin();
+	return 1;
+}
+int Monster::NextUsingItr()
+{
+	if (_itr_drop != _uslist.end())
+	{
+		++_itr_drop;
+		return 1;
+	}
+	return 0;
+}
+int Monster::EndUsingItr()
+{
+	if (_itr_drop == _uslist.end())
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+int Monster::GetCurUsingID()
+{
+	if (_itr_drop != _uslist.end())
+	{
+		return (*_itr_drop);
+	}
+	return 0;
+}
+int Monster::InitWeaponItr()
+{
+	_itr_drop = _wealist.begin();
+	return 1;
+}
+int Monster::NextWeaponItr()
+{
+	if (_itr_drop != _wealist.end())
+	{
+		++_itr_drop;
+		return 1;
+	}
+	return 0;
+}
+int Monster::EndWeaponItr()
+{
+	if (_itr_drop == _wealist.end())
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+
+}
+int Monster::GetCurWeaponID()
+{
+	if (_itr_drop != _wealist.end())
+	{
+		return (*_itr_drop);
+	}
+	return 0;
+}
+
+int Monster::GetUsingNum()
+{
+	return _uslist.size();
+}
+int Monster::GetWeaponNum()
+{
+	return _wealist.size();
+}
 //得到属性
 int Monster::GetDie()
 {

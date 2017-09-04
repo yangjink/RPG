@@ -1,6 +1,6 @@
 #include "control.h"
 
-int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,UsingMap& usingmap,NPCMap& npcMap)
+int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,UsingMap& usingmap,NPCMap& npcMap,Battle& battle)
 {
 	int num_in_map = 0;
 	string userinput;
@@ -49,6 +49,8 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 				mon.Generate(role.GetLevel());
 
 				//战斗
+				battle.InBattle(role,mon,monstermap);
+				battle.AfterBattle(role,mon,usingmap);
 			}
 
 		}
@@ -89,7 +91,7 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 	return 1;
 }
 
-int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap,UsingMap& usingMap,NPCMap& npcMap)
+int Control::game_init(Role& role,MapList& maplist,MonsterMap& monsterMap,UsingMap& usingMap,NPCMap& npcMap,Battle& battle)
 {
 	init_map(maplist);
 	init_role(role);
@@ -261,7 +263,16 @@ int Control::init_monster(MonsterMap& monsterMap)
 		mon_tmp.SetLevel(st_monster[i].level);
 		//初始化装备
 		//初始化掉落用品
-
+		for (int j = 0; j < 4; ++j)
+		if (st_monster[i].arr_using[j] >= 0)
+			mon_tmp.AddUsingList(st_monster[i].arr_using[j]);
+		else
+			break;
+		for (int j = 0; j < 4; ++j)
+		if (st_monster[i].arr_weapon[j] >= 0)
+			mon_tmp.AddWeaponList(st_monster[i].arr_weapon[j]);
+		else
+			break;
 		monsterMap.AddMonster(mon_tmp);
 	}
 	return 0;
@@ -448,7 +459,7 @@ int Control::print_game()
 	{
 		system("cls");
 		/* to print the game menu */
-		cout << endl << "    未命名        ver 1.0" << endl;
+		cout << endl << "    修行之路        ver 1.0" << endl;
 		cout << endl << "1: 新游戏" << endl << "2: 载入游戏（尚未添加）" << endl <<
 			"3: 游戏帮助" << endl << "4: 制作信息" << endl << "5: 退出" << endl;
 		cout << endl << "请选择（1~5）:" << endl;

@@ -9,16 +9,18 @@ int main()
 	MonsterMap monster_map;
 	UsingMap using_map;
 	NPCMap npc_map;
+	Battle battle;
+
 	int main_menu;
 	srand(unsigned(time(NULL)));
-	control.game_init(role,map_list,monster_map,using_map,npc_map);
+	control.game_init(role,map_list,monster_map,using_map,npc_map,battle);
 	while (1)
 	{
 		main_menu = control.print_game();
 		switch (main_menu)
 		{
 		case GAME_NEW:
-			control.game_control(role,map_list,monster_map,using_map,npc_map);
+			control.game_control(role,map_list,monster_map,using_map,npc_map,battle);
 			break;
 		case GAME_LOAD:
 			if (control.game_laod() == -1)
