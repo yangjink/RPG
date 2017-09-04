@@ -86,4 +86,6 @@ public:
 	int NewLife();
 	//游戏开始，初始化
 	int Initialize();
+	//打印背包，同时也牵扯使用
+	int PrintBeg(int battleOrNot = 0);
 };
