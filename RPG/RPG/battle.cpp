@@ -10,9 +10,9 @@ int Battle::InBattle(Role& role,Monster& monster,MonsterMap& monsterMap)
 	{
 		role.PrintHead();
 		cout << "Õ½¶·ÖÐ. . . ." << endl;
-		cout << "    " << role.GetName() << ":";
+		cout << "    " << setw(6)<<role.GetName() << ":";
 		//´òÓ¡Íæ¼ÒµÄÑª
-		tmp = (role.GetHP() / role.GetHPmax()) * 40;
+		tmp = int(float(role.GetHP()) / float(role.GetHPmax())*40);
 		for (int i_hit = 0; i_hit<40; ++i_hit)
 		if (i_hit<tmp)
 			cout << '|';
@@ -20,8 +20,8 @@ int Battle::InBattle(Role& role,Monster& monster,MonsterMap& monsterMap)
 			cout << '.';
 		cout << '(' << role.GetHP()<< ')';
 		//´òÓ¡¹ÖÎïµÄÑª
-		cout << endl << "   " << monster.GetName() << ":";
-		tmp = (monster.GetHP() / monster.GetHPmax()) * 40;
+		cout << endl << "    " <<setw(6)<< monster.GetName() << ":";
+		tmp = int(float(monster.GetHP()) / float(monster.GetHPmax()) * 40);
 		for (int i_hit = 0; i_hit<40; ++i_hit)
 		if (i_hit<tmp)
 			cout << '|';
@@ -109,7 +109,9 @@ int Battle::AfterBattle(Role& role, Monster& monster, UsingMap& usingmap)//×°±¸¼
 		monster.PrintDead();
 		role.ChangeExp(monster.GetExpPoint(),1);
 		GenerateDroped(monster,usingmap);
+		print_line_sep();
 		cout << "1:È·ÈÏ   0:¼ÌÐø " << endl;
+		print_line_sep();
 		while (1)
 		{
 			cin >> userInput;
@@ -175,14 +177,63 @@ int Battle::GenerateDroped(Monster& monster, UsingMap& usingmap)//×°±¸
 }
 
 //ÄÃÆðÊ²Ã´ÎïÆ·
-int Battle::PickUp(Role&)
+int Battle::PickUp(Role& role)
 {
 	string userInpur;
 	
 	while (1)
 	{
-
+		role.PrintHead();
+		int num = 1;
+		if (_usingDropList.empty() && _weaponDropList.empty())
+		{
+			break;
+		}
+		cout << "¹ÖÎïµôÂäÁË£º" << endl;
+		if (!_usingDropList.empty())
+		{
+			for (_itr_using = _usingDropList.begin(); _itr_using != _usingDropList.end(); ++_itr_using)
+			{
+				cout << "---" << num++ << ":" << _itr_using->GetName() << endl;
+			}
+		}
+		if (!_weaponDropList.empty())
+		{
+			for (_itr_weapon = _weaponDropList.begin(); _itr_weapon != _weaponDropList.end(); ++_itr_weapon)
+			{
+				cout << "---" << num++ << ":";
+				//×°±¸ÐÅÏ¢
+			}
+		}
+		cout << "--------------------please select--------------------" << endl;
+		while (1)
+		{
+			cin >> userInpur;
+			if (userInpur[0]>'0'&&userInpur[0] <= int(_usingDropList.size() + _weaponDropList.size()) + '0')
+				break;
+			if (userInpur[0] == 'B' || userInpur[0] == 'b')
+				break;
+			if (userInpur[0] == '0')
+				break;
+		}
+		if (userInpur[0] == 'b' || userInpur[0] == 'B')
+		{
+			role.PrintBeg();
+			break;
+		}
+		else if (userInpur[0] - '0' <= int(_usingDropList.size()))
+		{
+			int i = 0;
+			for (i = 1, _itr_using = _usingDropList.begin();i<userInpur[0] - '0'; ++_itr_using, ++i);
+			role.PickUp(*_itr_using);
+			_usingDropList.erase(_itr_using);
+		}
+		else  //¼ñ×°±¸
+		{
+	
+		}
 	}
+	return 1;
 }
 //¹¥»÷ÐèÒªÊÇËæ»úÊý
 //ÓÖ·ÖÎªÈËºÍ¹ÖÎïµÄ

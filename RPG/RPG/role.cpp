@@ -338,10 +338,216 @@ int Role::NewLife()
 //打印背包,同时也牵扯使用
 int Role::PrintBeg(int battleOrNot)
 {
-	//int battle;
+	int battle = battleOrNot;
+	
+	string userinput;
+	list<Using>::iterator uitr;
+	//装备
+	//数量
+	int count = 0;
+	//什么东西 1 物品 2装备
+	int which;
+	int page = 0;
+	int maxPrint = 9;
+	int nextPage;
+	int num = 0;
+
+	int change = 0;
+	while (true)
+	{
+		PrintHead();
+		nextPage = 1;
+		for (int i = 0; i < 45; ++i)
+		if (i == 22)
+			cout << "背包信息";
+		else
+			cout << '-';
+		cout << endl;
+		cout << "1: 物品" << "        " << "2:  装备" << endl;
+		while (1)
+		{
+			cin >> userinput;
+			if (userinput[0] == '1' || userinput[0] == '2')
+			{
+				break;
+			}
+		}
+		which = userinput[0] - '0';
+		int k = 0;
+		int i = 0;
+		if (which == 1)
+		{
+			for (_itr_using = _usingList.begin(), i = 0; i<page*maxPrint; ++i)
+				++_itr_using;
+			k = int(_usingList.size()) - page*maxPrint;
+			for ( i = 0; i < maxPrint; ++i)
+			{
+				cout << "   " << i + 1 << ":";
+				_itr_using->PringUsingInfo();
+				++_itr_using;
+			}
+		}
+		else//打印装备
+		{
+
+		}
+
+		if (which == 1 && !_usingList.empty())
+		{
+			print_line_sep();
+			num = _usingList.size() - page*maxPrint;
+			if (num > 9)
+			{
+				num = 9;
+			}
+			cout << "1~" << num << "选择   ";
+			if (page > 0) cout << "Z";
+			cout << "/";
+			if ((page + 1)*maxPrint < _usingList.size())
+			{
+				cout << "X";
+			}
+			cout << ":翻页    0：推出" << endl;
+			print_line_sep();
+			while (1)
+			{
+				cin >> userinput;
+				if (userinput[0]-'0' >= 1  && userinput[0]-'0' <= num )
+					break;
+				if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< _usingList.size()))
+					break;
+				if ((userinput[0] == 'z' || userinput[0] == 'Z') && page>0)
+					break;
+				if (userinput[0] == '0')
+				{
+					if (change == 0)
+						return 0;
+					else
+						return 1;
+				}
+			}
+			if (userinput[0] - '0' >= 1 && userinput[0] - '0' <= num)
+			{
+				int temp;
+				int i = userinput[0] - '0' + page*maxPrint;
+				_itr_using = _usingList.begin();
+				for (int j = 1; j<i; ++j)
+					++_itr_using;
+				
+				PrintHead();
+				temp = _itr_using->PrintInfo();
+				if (temp != 0)
+				{
+					if (temp == 1)
+						UseUsing(*_itr_using);
+					if (temp == -1)
+						_usingList.erase(_itr_using);
+					change = 1;
+					if (battle == 1)
+						return 1;
+				}
+			}
+			if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< _usingList.size()))
+				++page;
+			if ((userinput[0] == 'z' || userinput[0] == 'Z') && page>0)
+				--page;
+		}
+		//装备的显示使用
+		else if (which == 2 && 0)
+		{
+		}
+		else
+		{
+			cout << "  你的背包是空的！" << endl;
+			print_line_sep();
+			cout << "  0: 返回" << endl;
+			print_line_sep();
+			while (1)
+			{
+				cin >> userinput;
+				if (userinput[0] == '0')
+					break;
+			}
+			if (userinput[0] == '0')
+				return 0;
+		}
+	}
 	return 1;
 }
+//使用物品 返回1成功使用 返回0非使用物品
+int Role::UseUsing(Using& us)
+{
+	int usingid = us.GetID();
+	list<Using>::iterator itr;
+	for (itr = _usingList.begin(); itr != _usingList.end();++itr)
+	{
+		if (itr->GetID() == usingid)
+		{
+			itr->DecreaseNumber(1);
+			break;
+		}
+	}
+	//如果数量小于等于0 删掉它
+	if (itr->GetNumber() <= 0)
+		_usingList.erase(itr);
 
+	if (itr->GetAddHP() > 0)
+	{
+		int add = 0;
+		/* percent or not */
+		if ( itr->GetPercentOrNo() == 1)
+		{
+			add = int(float(itr->GetAddHP()) / 100 * (GetHPmax()));
+		}
+		else
+		{
+			add = itr->GetAddHP();
+		}
+		ChangeHP(add,1);
+		return 1;
+	}
+	if (itr->GetAddMP() > 0)
+	{
+		int add = 0;
+		/* percent or not */
+		if (itr->GetPercentOrNo() == 1)
+		{
+			add = int(float(itr->GetAddMP()) / 100 * (GetMPmax()));
+		}
+		else
+		{
+			add = itr->GetAddMP();
+		}
+		ChangeMP(add, 1);
+		return 1;
+	}
+
+	return 0;
+}
+int Role::LoseUsing(int id, int num)
+{
+	for (_itr_using = _usingList.begin(); _itr_using != _usingList.end(); ++_itr_using)
+	{
+		if (_itr_using->GetID() == id)
+		{
+			
+			_itr_using->DecreaseNumber(num, 1);
+			
+			if (_itr_using->GetNumber() <= 0)
+			{
+				_usingList.erase(_itr_using);
+				break;
+			}
+		}
+	}
+
+	return 1;
+}
+//打印更多信息
+int Role::PrintInfo()
+{
+	return 1;
+}
 int Role::Initialize()
 {
 	_name = "yjk";

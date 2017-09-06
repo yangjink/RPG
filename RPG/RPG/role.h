@@ -50,7 +50,9 @@ public:
 	int PickUp(Using&);
 	int PickUp(Using&, int);
 	int PickUp(Weapon);
-
+    //使用物品 返回1成功使用 返回0非使用物品
+	int UseUsing(Using&);
+	int LoseUsing(int, int);
 	//出售东西
 	int Sell();
 	//得到基本信息

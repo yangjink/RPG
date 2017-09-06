@@ -9,6 +9,7 @@
 #include <fstream>
 #include <windows.h>
 #include <math.h>
+#include <iomanip>
 using namespace std ;
 
 #include "battle.h"

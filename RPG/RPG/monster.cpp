@@ -75,6 +75,7 @@ int Monster::AddUsingList(int id)
 }
 int Monster::AddWeaponList(int id)
 {
+	//
 	return 1;
 }
 int Monster::MonsterClear()
@@ -229,11 +230,11 @@ bool Monster::Dead()
 	if (_HP <= 0)
 	{
 		_die = 0;
-		return 0;
+		return 1;
 	}
 	else
 	{
-		return 1;
+		return 0;
 	}
 }
 

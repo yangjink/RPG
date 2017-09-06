@@ -14,6 +14,8 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 		num_in_map = maplist.GetMonsterNum()+maplist.GetNPCNum();
 		cout << "1~" << num_in_map << "选择   0: 菜单" << endl;
 		print_line_sep();
+		cout << "b：背包    c：账号信息" << endl;
+		print_line_sep();
 
 		while (1)
 		{
@@ -22,13 +24,17 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 				break;
 			if (userinput[0] - '0' >= 1 && userinput[0] - '0' <= num_in_map)
 				break;
-			if (userinput[0] == 'w' || userinput[0] == 'W')/* change map*/
+			if (userinput[0] == 'w' || userinput[0] == 'W')//北
 				break;
-			if (userinput[0] == 's' || userinput[0] == 'S')/* change map*/
+			if (userinput[0] == 's' || userinput[0] == 'S')//南
 				break;
-			if (userinput[0] == 'a' || userinput[0] == 'A')/* change map*/
+			if (userinput[0] == 'a' || userinput[0] == 'A')//西
 				break;
-			if (userinput[0] == 'd' || userinput[0] == 'D')/* change map*/
+			if (userinput[0] == 'd' || userinput[0] == 'D')//东
+				break;
+			if (userinput[0] == 'b' || userinput[0] == 'B')//背包
+				break;
+			if (userinput[0] == 'c' || userinput[0] == 'C')//背包
 				break;
 		}
 		if (userinput[0] == '0')
@@ -85,6 +91,14 @@ int Control::game_control(Role& role,MapList& maplist,MonsterMap& monstermap,Usi
 				//生成npc或者怪物
 				maplist.Generate(role, monstermap);
 			}
+		}
+		else if (userinput[0] == 'b' || userinput[0] == 'B')
+		{
+			role.PrintBeg();
+		}
+		else if (userinput[0] == 'c' || userinput[0] == 'C')
+		{
+			role.PrintInfo();
 		}
 	}
 
