@@ -1,12 +1,8 @@
-﻿生成启动时间为 2017/9/7 2:17:10。
+﻿生成启动时间为 2017/9/7 10:30:57。
      1>项目“D:\作业\RPG游戏\RPG（名字暂定）\RPG\RPG\RPG.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          D:\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt role.cpp
          role.cpp
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\role.cpp(406): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\role.cpp(417): warning C4018: “<”: 有符号/无符号不匹配
-     1>d:\作业\rpg游戏\rpg（名字暂定）\rpg\rpg\role.cpp(450): warning C4018: “<”: 有符号/无符号不匹配
-     1>cl : 命令行 warning D9028: 最小重新生成失败，正在转换为标准生成
        Link:
          D:\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\作业\RPG游戏\RPG（名字暂定）\RPG\Debug\RPG.lib" /MACHINE:X86 Debug\battle.obj
          Debug\control.obj
@@ -21,4 +17,4 @@
 
 生成成功。
 
-已用时间 00:00:02.76
+已用时间 00:00:01.87

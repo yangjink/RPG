@@ -403,7 +403,7 @@ int Role::PrintBeg(int battleOrNot)
 			cout << "1~" << num << "选择   ";
 			if (page > 0) cout << "Z";
 			cout << "/";
-			if ((page + 1)*maxPrint < _usingList.size())
+			if ((page + 1)*maxPrint < (int)_usingList.size())
 			{
 				cout << "X";
 			}
@@ -414,7 +414,7 @@ int Role::PrintBeg(int battleOrNot)
 				cin >> userinput;
 				if (userinput[0]-'0' >= 1  && userinput[0]-'0' <= num )
 					break;
-				if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< _usingList.size()))
+				if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< (int)_usingList.size()))
 					break;
 				if ((userinput[0] == 'z' || userinput[0] == 'Z') && page>0)
 					break;
@@ -447,7 +447,7 @@ int Role::PrintBeg(int battleOrNot)
 						return 1;
 				}
 			}
-			if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< _usingList.size()))
+			if ((userinput[0] == 'x' || userinput[0] == 'X') && ((page + 1)*maxPrint< (int)_usingList.size()))
 				++page;
 			if ((userinput[0] == 'z' || userinput[0] == 'Z') && page>0)
 				--page;
@@ -546,6 +546,27 @@ int Role::LoseUsing(int id, int num)
 //打印更多信息
 int Role::PrintInfo()
 {
+	//list<Weapon*>::iterator itr_weapon_t;
+	string userinput;
+	PrintHead();
+	cout << "  角色名: " << _name << endl;
+	cout << "  等级: " << _level << endl;
+	cout << "  银两: " << _money << endl;
+	cout << "  HP: " << _HP << " / " << _HPmax << endl;
+	cout << "  MP: " << _MP << " / " << _MPmax << endl;
+	cout << "  EXP: " << _exp << " / " << _expMax << endl;
+	cout << "  攻击力: " << _attackPoint << endl;
+	cout << "  防御力: " << _defendPoint << endl;
+	cout << "装备: " << endl;
+	//装备
+
+	cout << "1: 确定 " << endl;
+	while (true)
+	{
+		cin >> userinput;
+		if (userinput[0] == '1')
+			break;
+	}
 	return 1;
 }
 int Role::Initialize()
