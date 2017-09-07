@@ -81,6 +81,7 @@
     <ClCompile Include="control.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="mission.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="npc.cpp" />
     <ClCompile Include="role.cpp" />
