@@ -95,34 +95,42 @@ list<int> Mission::GetGiftList()
 {
 	return _giftList;
 }
+
 string Mission::GetTalkBefore()	
 {
 	return _talkbefore;
 }
+
 string Mission::GetTalkBeing()
 {
 	return _talkbeing;
 }
+
 string Mission::GetTalkDone()	
 {
 	return _talkdone;
 }
+
 string Mission::GetInfo()
 {
 	return _info;
 }
+
 int Mission::GetCircle()
 {
 	return _circle;
 }
+
 int Mission::GetLock()
 {
 	return _lock;
 }
+
 int Mission::GetUnlockMap()
 {
 	return _unlockmap;
 }
+
 int Mission::GetLevel()
 {
 	return _level;
