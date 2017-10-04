@@ -67,4 +67,11 @@ public:
 	int GetLock();
 	int GetLevel();
 	int GetUnlockMap();
+	
+	virtual int TaliMsn();
+	virtual int AcceptMsn();
+	virtual int IsMsnCompleted();
+	virtual int HandOnMsn();//½»¸¶
+	virtual int DoneMsn();
+	virtual int CanSeeMsn();
 };
